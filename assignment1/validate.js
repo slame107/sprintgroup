@@ -35,4 +35,13 @@ function validate() {
 			return true;
 		}
 
+	
 }
+
+    function button(){
+		return true;
+	}
+	document.getElementById("results").onclick = function () {
+        location.href = "results.php";
+    };
+	a href='search.php'
