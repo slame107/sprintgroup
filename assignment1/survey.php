@@ -1,6 +1,7 @@
 <?php
 $checkboxError = "";
 $gradeError = "";
+$toppingError = "";
 $majorChecked1 = "";
 $majorChecked2 = "";
 $majorChecked3 = "";
@@ -12,7 +13,12 @@ $gradeCheckedB = "";
 $gradeCheckedC = "";
 $gradeCheckedD = "";
 $gradeCheckedF = "";
-if(isset($_POST["topping"])){ //once add email, change to email
+$topCheckedPep = "";
+$topCheckedBac = "";
+$topCheckedPin = "";
+$topCheckedSau = "";
+$topCheckedSpi = "";
+if(isset($_POST["topping"])){ //will change to email when add email field
 	$majorChk1=$_POST["majorChk1"];
 	$majorChk2=$_POST["majorChk2"];
 	$majorChk3=$_POST["majorChk3"];
@@ -24,6 +30,7 @@ if(isset($_POST["topping"])){ //once add email, change to email
 	$checkboxBool = ($majorChk1!=null || $majorChk2!=null || $majorChk3!=null || $majorChk4!=null || $majorChk5!=null || $majorChk6!=null);
 	$gradeBool = ($grade=="A" || $grade=="B" || $grade=="C" || $grade=="D" || $grade=="F");
 	$toppingBool = ($topping=="pep" || $topping=="bac" || $topping=="pin" || $topping=="sau" || $topping=="spi");
+	
 	//when adding email if not null
 	if($checkboxBool && $gradeBool && $toppingBool ){
 		//write to DB
@@ -37,6 +44,9 @@ if(isset($_POST["topping"])){ //once add email, change to email
 		}
 		if(!$gradeBool){
 			$gradeError="<span class='error'>You must select a grade</span>";
+		}
+		if(!$gradeBool){
+			$toppingError="<span class='error'>You must select a topping</span>";
 		}
 		
 		//generate form refill
@@ -59,7 +69,7 @@ if(isset($_POST["topping"])){ //once add email, change to email
 			$majorChecked6 = "checked";
 		}
 		
-		//grade refill
+		//grade form refill
 		if($grade == "A"){
 			$gradeCheckedA = "checked";
 		}else if($grade == "B"){
@@ -71,17 +81,22 @@ if(isset($_POST["topping"])){ //once add email, change to email
 		}else if($grade == "F"){
 			$gradeCheckedF = "checked";
 		}
+		
+		//topping form refill
+		if($topping == "pep"){
+			$topCheckedPep = "checked";
+		}else if($topping == "bac"){
+			$topCheckedBac = "checked";
+		}else if($topping == "pin"){
+			$topCheckedPin = "checked";
+		}else if($topping == "sau"){
+			$topCheckedSau = "checked";
+		}else if($topping == "spi"){
+			$topCheckedSpi = "checked";
+		}
+		
 	}
 }	
-//if(isValid()){
-	//INSERT into survey(submittime, major, major, major, major, major, major, expectedgrade, favetopping, userip)
-	//values(date_time_set, majorChk1, majorChk2, majorChk3, majorChk4, majorChk5, majorChk6, grade, topping,  )
-//}
-//else {
-	//generate errors
-	//$checkboxError="<span>You must select a major</span>";
-//}
-	
 
 require_once("template.php");
 $page = new Template("Survey");
@@ -129,14 +144,12 @@ print "<form id='frmChoice' method='post' action = 'survey.php' onsubmit='return
 	  
 			print "<fieldset id='group3'>";
 
-				print "<label>What is your favorite pizza topping? </label><br/>";
-				
-				print "<input type='radio' name='topping' value='pep' class='pizza-radio'> Pepperoni <br/>";
-				print "<input type='radio' name='topping' value='bac' class='pizza-radio'> Bacon <br/>";
-				print "<input type='radio' name='topping' value='pin' class='pizza-radio'> Pineapple <br/>";
-				print "<input type='radio' name='topping' value='sau' class='pizza-radio'> Italian Sausage <br/>";
-				print "<input type='radio' name='topping' value='spi' class='pizza-radio'> Roasted Spinach <br/>";
-				
+				print "<label>What is your favorite pizza topping? </label> $toppingError<br/>";
+				print "<input type='radio' name='topping' value='pep' class='pizza-radio' $topCheckedPep> Pepperoni <br/>";
+				print "<input type='radio' name='topping' value='bac' class='pizza-radio' $topCheckedBac> Bacon <br/>";
+				print "<input type='radio' name='topping' value='pin' class='pizza-radio' $topCheckedPin> Pineapple <br/>";
+				print "<input type='radio' name='topping' value='sau' class='pizza-radio' $topCheckedSau> Italian Sausage <br/>";
+				print "<input type='radio' name='topping' value='spi' class='pizza-radio' $topCheckedSpi> Roasted Spinach <br/>";			
 				print "<br/>";
 	  
 				print "<input type='submit' value='Submit'>";
