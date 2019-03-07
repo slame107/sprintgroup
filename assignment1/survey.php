@@ -45,7 +45,7 @@ if(isset($_POST["topping"])){ //will change to email when add email field
 		if(!$gradeBool){
 			$gradeError="<span class='error'>You must select a grade</span>";
 		}
-		if(!$gradeBool){
+		if(!$toppingBool){
 			$toppingError="<span class='error'>You must select a topping</span>";
 		}
 		
