@@ -60,3 +60,7 @@ form{
 	padding: 1em;
 
 }
+
+.error {
+	color: red;
+}
