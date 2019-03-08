@@ -19,9 +19,9 @@ if(isset($_POST["topping"])||isset($_POST["grade"])||$checkboxSet){ //will chang
 	$checkboxBool = ($majorChk1!=null || $majorChk2!=null || $majorChk3!=null || $majorChk4!=null || $majorChk5!=null || $majorChk6!=null);
 	$gradeBool = ($grade=="A" || $grade=="B" || $grade=="C" || $grade=="D" || $grade=="F");
 	$toppingBool = ($topping=="pep" || $topping=="bac" || $topping=="pin" || $topping=="sau" || $topping=="spi");
-	
+
 	$surveyOK = true;
-	
+
 	//generate errors
 	if(!$checkboxBool){
 		$checkboxError="<span class='error'>You must select a major</span><br>";
@@ -56,19 +56,79 @@ if(isset($_POST["topping"])||isset($_POST["grade"])||$checkboxSet){ //will chang
 		//insert data into database
 		//need a way to connect to DB ...dbHelper class?
 		//Insert statement ...dbHelper class?
-		
+
+		//CREATE TABLE survey (id int not null primary key auto_increment,submittime datetime,major varchar(255),expectedgrade varchar(255),favetopping varchar(255),userip varchar(255),sessionid varchar(255));
+
+
+
+/*commented out at moment
+
+//connecting to db
+
+
+		require_once("DB.class.php");
+		$db = new DB();
+
+		//var_dump($db);
+
+		if (!$db->getConnStatus()) {
+		  print "An error has occurred with connection\n";
+		  exit;
+		}
+		/*
+		//INSERT example
+		//Pretend this is unsanitized
+		//user data from a form:
+		$user = "bob";
+		$safeUser = $db->dbEsc($user);
+		$query = "INSERT INTO testschema (username,pass,active) " .
+		          "VALUES ('{$safeUser}','l33t',1)";
+		$result = $db->dbCall($query);
+		//This will contain the insert id
+		print "Insert statement executed, insert id was: " . $result . "\n";
+		*/
+
+		//If using unsanitized data, be sure
+		//to call the dbEsc() method on any individual values!
+		// Must do that prior to building the statement here
+
+
+
+/*/*commented out at moment
+
+
+		$query = "SELECT username FROM testschema WHERE active = 1";
+		$result = $db->dbCall($query);
+		var_dump($result);
+
+		/*
+		//UPDATE example
+		//If using unsanitized data, be sure
+		//to call the dbEsc() method on any individual values!
+		// Must do that prior to building the statement here
+		$query = "UPDATE testschema SET pass = 'testpass' WHERE id = 1";
+		$result = $db->dbCall($query);
+		print "Update statement executed, affected rows: " . $result . "\n";
+
+
+		*/
+
+
+//end database connection
+
+
 	}else{
 		$surveyMessage = "<h1>There were some errors in your survey</h1><br>";
 		$surveyMessage .= $checkboxError;
 		$surveyMessage .= $gradeError;
 		$surveyMessage .= $toppingError;
 	}
-	
-	
+
+
 }else{
 	header ("Location: index.php");
 	exit();
-}	
+}
 require_once("template.php");
 $page = new Template("Thank You");
 $page->addHeadElement("<script src='hello.js'></script>");
