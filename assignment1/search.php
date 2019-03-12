@@ -14,6 +14,7 @@ print "<ul>";
 print "</ul>";
 print "<h1>Search Page</h1>";
 print "<form id='frmChoice' method='post' action = 'results.php' onsubmit='return validate()'>";
+print "<h2> Album Search </h2>";
 print "<input type='text' placeholder='Search..'>";
 print "<button id='results' type='submit' >Submit</button>";
 print "</form>";
