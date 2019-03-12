@@ -1,6 +1,8 @@
 <?php
 require_once("template.php");
-$page = new Template("Home");
+require_once("DB.class.php");
+
+$page = new Template("Results");
 $page->addHeadElement("<script src='hello.js'></script>");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
 $page->finalizeTopSection();
@@ -16,24 +18,40 @@ print "<h1>Results Page</h1>";
 
 $db = new DB();
 
-//var_dump($db);
+$search = $_POST['search'];
+
+$search = filter_var($search, FILTER_SANITIZE_STRING);
+
+$search =  $db->dbEsc($search);
 
 if (!$db->getConnStatus()) {
   print "An error has occurred with connection\n";
   exit;
 }
 
-$query = "select * from bookinfo;";
+$query = "SELECT * FROM album WHERE albumartist LIKE '%$search%' OR albumtitle LIKE '%$search%'";
 
 $result = $db->dbCall($query);
-//var_dump($result);
+
+
+
+if($result)
+{
+			
+
 print "<table>";
 
-	foreach($result as $book) {
-			print "<tr><td>" . $book['id'] . " " . $book['inserttime'] . " " . $book['booktitle'] . " "  . $book['isbn'] .   " " . $book['author']  . " " . $book['status'] . "</td></tr>";
+	foreach($result as $album) {
+			print "<tr><td>" . $album['inserttime'] . " " . $album['albumtitle'] . 
+			" " . $album['albumartist'] . " "  . $album['albumlength'] .   " " . 
+			$album['status']  ."</td></tr>";
 		}
 		
 
 print "</table>";
+} else
+{
+	print "Please enter valid album artist or title.";
+}
 
 print $page->getBottomSection();
