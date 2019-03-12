@@ -4,29 +4,70 @@ $gradeError = "";
 $toppingError = "";
 $checkboxSet = false;
 $surveyMessage = "<h1> Thank you for participating in our survey</h1>";
-if(isset($_POST["majorChk1"])||isset($_POST["majorChk2"])||isset($_POST["majorChk3"])||isset($_POST["majorChk4"])||isset($_POST["majorChk5"])||isset($_POST["majorChk6"])){
+$surveyOK = true;
+$selected = "";
+
+$selected = $_POST['check_list'];
+
+ if(empty($selected))
+ {
+	 $checkboxError="<span class='error'>You must select a major</span><br>";
+	 $surveyOK = false;
+ }
+ else
+ {
+	 $check_list = implode(" ",$_POST['check_list']);
+ }
+
+//var_dump ($check_list);
+/*
+if(!empty($_POST['check_list'])) {
+// Loop to store and display values of individual checked checkbox.
+foreach($_POST['check_list'] as $selected) {
+	$list implode(',', $_POST['check_list']); // change the comma to whatever separator you want
 	$checkboxSet = true;
 }
-if(isset($_POST["topping"])||isset($_POST["grade"])||$checkboxSet){ //will change to email when add email field
-	$majorChk1=$_POST["majorChk1"];
-	$majorChk2=$_POST["majorChk2"];
-	$majorChk3=$_POST["majorChk3"];
-	$majorChk4=$_POST["majorChk4"];
-	$majorChk5=$_POST["majorChk5"];
-	$majorChk6=$_POST["majorChk6"];
+
+}
+else{
+	$checkboxError="<span class='error'>You must select a major</span><br>";
+	$surveyOK = false;
+
+}
+/*
+if(isset($_POST["majorChk1"])||isset($_POST["majorChk2"])||isset($_POST["majorChk3"])||isset($_POST["majorChk4"])||isset($_POST["majorChk5"])||isset($_POST["majorChk6"]))
+	{
+		$checkboxSet = true;
+	}
+	*/
+
+
+
+//	var_dump($selected);
+
+if(isset($_POST["topping"])||isset($_POST["grade"]))
+	{ //will change to email when add email field
+
+/*
+	$majorChk1=$_POST["AppDev"];
+	$majorChk2=$_POST["Networking"];
+	$majorChk3=$_POST["WDMD"];
+	$majorChk4=$_POST["WD"];
+	$majorChk5=$_POST["HTI"];
+	$majorChk6=$_POST["Other"];
+*/
 	$grade=$_POST["grade"];
 	$topping=$_POST["topping"];
-	$checkboxBool = ($majorChk1!=null || $majorChk2!=null || $majorChk3!=null || $majorChk4!=null || $majorChk5!=null || $majorChk6!=null);
+//	$checkboxBool = ($selected != null);
 	$gradeBool = ($grade=="A" || $grade=="B" || $grade=="C" || $grade=="D" || $grade=="F");
 	$toppingBool = ($topping=="pep" || $topping=="bac" || $topping=="pin" || $topping=="sau" || $topping=="spi");
 
-	$surveyOK = true;
+
+
 
 	//generate errors
-	if(!$checkboxBool){
-		$checkboxError="<span class='error'>You must select a major</span><br>";
-		$surveyOK = false;
-	}
+
+
 	if(!$gradeBool){
 		$gradeError="<span class='error'>You must select a grade</span><br>";
 		$surveyOK = false;
@@ -39,6 +80,8 @@ if(isset($_POST["topping"])||isset($_POST["grade"])||$checkboxSet){ //will chang
 		//get current time
 		$date = new DateTime();
 		$time = $date->getTimeStamp();
+		//var_dump($time);
+
 		//get user ip
 	$ip;
 	if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
@@ -53,28 +96,53 @@ if(isset($_POST["topping"])||isset($_POST["grade"])||$checkboxSet){ //will chang
     {
       $ip=$_SERVER['REMOTE_ADDR'];
     }
+
+		$valid_ip = filter_var($ip, FILTER_VALIDATE_IP);
+		//validate ip
+
+		//var_dump($ip);
+
+
+
+
+
+
+
+
+
+//		var_dump($check_list,$grade, $topping, $ip);
+
+
+
+
+
 		//insert data into database
 		//need a way to connect to DB ...dbHelper class?
 		//Insert statement ...dbHelper class?
 
-		//CREATE TABLE survey (id int not null primary key auto_increment,submittime datetime,major varchar(255),expectedgrade varchar(255),favetopping varchar(255),userip varchar(255),sessionid varchar(255));
+//		INSERT INTO survey
+//		VALUES
+//		(0, now(), 'CIS', 'A', 'pepporoni', 'ip', 'sessionid');
 
 
 
-/*commented out at moment
 
 //connecting to db
 
 
+/*
 		require_once("DB.class.php");
 		$db = new DB();
 
-		//var_dump($db);
+	//	var_dump($db);
+
 
 		if (!$db->getConnStatus()) {
 		  print "An error has occurred with connection\n";
 		  exit;
 		}
+
+
 		/*
 		//INSERT example
 		//Pretend this is unsanitized
@@ -91,15 +159,26 @@ if(isset($_POST["topping"])||isset($_POST["grade"])||$checkboxSet){ //will chang
 		//If using unsanitized data, be sure
 		//to call the dbEsc() method on any individual values!
 		// Must do that prior to building the statement here
+/*
+		$safecheck_list = $db->dbEsc($check_list);
+		$safegrade = $db->dbEsc($grade);
+		$safetopping = $db->dbEsc($topping);
+		$safeip = $db->dbEsc($ip);
+*/
+		 $sql = "INSERT INTO survey VALUES "."('0','now()','$check_list','$grade','$topping','$ip')";
+		 var_dump($sql);
+
+
+	//	$query = "INSERT INTO `survey` VALUES ('0', 'now()', 'CIS', 'C', 'sausage', '127', '0')";
+	//	$result = $db->dbCall($query);
 
 
 
-/*/*commented out at moment
 
 
-		$query = "SELECT username FROM testschema WHERE active = 1";
-		$result = $db->dbCall($query);
-		var_dump($result);
+//		$query = "SELECT username FROM testschema WHERE active = 1";
+//		$result = $db->dbCall($query);
+//	var_dump($result);
 
 		/*
 		//UPDATE example
