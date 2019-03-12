@@ -16,5 +16,8 @@ print "<h1>Search Page</h1>";
 print "<form id='frmChoice' method='post' action = 'results.php' onsubmit='return validate()'>";
 print "<input type='text' name='search' placeholder='Search..'>";
 print "<button id='results' type='submit'>Submit</button>";
+print "<h2> Album Search </h2>";
+print "<input type='text' id='search' placeholder='Search..'>";
+print "<button id='results' type='submit' >Submit</button>";
 print "</form>";
 print $page->getBottomSection();
