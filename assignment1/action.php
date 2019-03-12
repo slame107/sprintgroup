@@ -30,6 +30,7 @@ $majors = "";
 $majorsInsert = "";
 $ip = "";
 $surveyMessage = "<h1> Thank you for participating in our survey</h1>";
+$surveyOK = true;
 if(isset($_POST["topping"]) && isset($_POST["grade"]) && isset($_POST['major'])){ //will change to email when add email field
 	$grade=$_POST["grade"];
 	$topping=$_POST["topping"];
