@@ -1,7 +1,6 @@
 <?php
 require_once("template.php");
 $page = new Template("Home");
-$page->addHeadElement("<script src='hello.js'></script>");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
 $page->finalizeTopSection();
 $page->finalizeBottomSection();
