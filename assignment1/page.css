@@ -65,9 +65,15 @@ form{
 	color: red;
 }
 
-table, td, tr{
+table, td{
    border-collapse: collapse;
-   border-color: #FF8800;
-   border: 1px solid;
-   margin-bottom: 1em;
+   border: 2px solid #FF8800;
+   padding: .5em;
+}
+
+#error{
+	border: 2px solid #FF0000;
+	color: #FF0000;
+	margin-right: 80%;
+	padding: .5em;
 }

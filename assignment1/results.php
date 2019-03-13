@@ -3,7 +3,6 @@ require_once("template.php");
 require_once("DB.class.php");
 
 $page = new Template("Results");
-$page->addHeadElement("<script src='hello.js'></script>");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
 $page->finalizeTopSection();
 $page->finalizeBottomSection();
@@ -40,18 +39,24 @@ if($result)
 			
 
 print "<table>";
+print "<tr><th>Insert Time</th>
+						<th>Album Title</th>
+						<th>Album Artist</th>
+						<th>Album Length</th>
+						<th>Status</th>
+					</tr>";
 
 	foreach($result as $album) {
-			print "<tr><td>" . $album['inserttime'] . " " . $album['albumtitle'] . 
-			" " . $album['albumartist'] . " "  . $album['albumlength'] .   " " . 
-			$album['status']  ."</td></tr>";
+			print "<tr><td>" . $album['inserttime'] . "</td>" . "<td>" . $album['albumtitle'] . 
+				"<td>" . $album['albumartist'] . "</td>"  . "<td>" . $album['albumlength'] . "</td>" . 
+				"<td>" . $album['status']  ."</td></tr>";
 		}
 		
-
 print "</table>";
+
 } else
 {
-	print "Please enter valid album artist or title.";
+	print "<p id='error'> Please enter valid album artist or title. </p>";
 }
 
 print $page->getBottomSection();
