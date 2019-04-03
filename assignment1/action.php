@@ -7,13 +7,6 @@ $page->finalizeTopSection();
 $page->finalizeBottomSection();
 print $page->getTopSection();
 
-$db = new DB();
-
-if (!$db->getConnStatus()) {
-	print "An error has occurred with connection\n";
-	exit;
-}
-
 print "<ul>";
 	print "<li><a href='index.php' title='Click here to see our home page'>Home Page</a></li>";
 	print "<li><a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
@@ -35,11 +28,6 @@ if(isset($_POST["topping"]) && isset($_POST["grade"]) && isset($_POST['major']))
 	$topping=$_POST["topping"];
 	foreach($_POST['major'] as $major)
 	{
-		$majors[] = $db->dbEsc($major);
-	}
-	
-	foreach($_POST['major'] as $major)
-	{
 		if($major == "CIS-Networking" || $major == "CIS-AppDev" || $major == "WDMD" || $major == "WD" || $major == "HTI" || $major == "Other")
 		{
 			$majorBool = true;
@@ -49,12 +37,9 @@ if(isset($_POST["topping"]) && isset($_POST["grade"]) && isset($_POST['major']))
 			$majorBool = false;
 			break;
 		}
-	}
-	
-	foreach($majors as $major)
-	{
 		$majorsInsert .= $major." ";
 	}
+	
 	$gradeBool = ($grade=="A" || $grade=="B" || $grade=="C" || $grade=="D" || $grade=="F");
 	$toppingBool = ($topping=="Pepperoni" || $topping=="Bacon" || $topping=="Pineapple" || $topping=="Italian Sausage" || $topping=="Roasted Spinach");
 	
@@ -73,13 +58,7 @@ if(isset($_POST["topping"]) && isset($_POST["grade"]) && isset($_POST['major']))
 	}
 	
 	if($surveyOK)
-	{
-		
-	
-		//get current time
-		$date = new DateTime();
-		$time = $date->getTimeStamp();
-		
+	{	
 		//get user ip
 		if (!empty($_SERVER['HTTP_CLIENT_IP']))   //check ip from share internet
 		{
@@ -94,11 +73,17 @@ if(isset($_POST["topping"]) && isset($_POST["grade"]) && isset($_POST['major']))
 		  $ip=$_SERVER['REMOTE_ADDR'];
 		}
 		
+		$db = new DB();
+		
 		//DB Escape
-		$time = $db->dbEsc($time);
 		$grade = $db->dbEsc($grade);
 		$topping = $db->dbEsc($topping);
 		$ip = $db->dbEsc($ip);
+
+		if (!$db->getConnStatus()) {
+			print "An error has occurred with connection\n";
+			exit;
+		}	
 		
 		//insert data into database
 		$query = "INSERT INTO survey (submittime, major, expectedgrade, favetopping, userip) VALUES 
