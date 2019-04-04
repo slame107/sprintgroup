@@ -11,6 +11,7 @@ print "<ul>";
 	print "<li><a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
 	print "<li><a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a></li>";
 	print "<li><a href='search.php' title='Click here to search for an album'>Search</a></li>";
+	print "<li><a href='surveydata.php' title='Click here to see survey data'>Survey Data</a></li>";
 	print "<li><a href='login.php' title='Click here to login'>Login</a></li>";
 print "</ul>";
 
