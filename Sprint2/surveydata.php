@@ -1,5 +1,6 @@
 <?php
 require_once("template.php");
+require_once("DB.class.php");
 $page = new Template("Survey Data");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
 $page->finalizeTopSection();
@@ -48,7 +49,7 @@ $db = new DB();
 		foreach($result as $data) {
 				print "<tr><td>" . $data['id'] . "</td>" . "<td>" . $data['submittime'] . 
 					"<td>" . $data['major'] . "</td>"  . "<td>" . $data['expectedgrade'] . "</td>" . 
-					"<td>" . $data['favetopping'] . $data['userip'] . "</td>" . $data['sessionip']  ."</td></tr>";
+					"<td>" . $data['favetopping'] . "</td>"  . "<td>" . $data['userip'] . "</td>"  . "<td>" . $data['sessionid']  ."</td></tr>";
 			}
 			
 	print "</table>";
