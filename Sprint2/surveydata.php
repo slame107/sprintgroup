@@ -21,7 +21,7 @@ print "</div>";
 
 
 $db = new DB();
-
+print "<article id='content'>";
 
 
 	if (!$db->getConnStatus()) {
@@ -62,5 +62,5 @@ $db = new DB();
 		print "<p id='error'> Query Error </p>";
 	}
 
-
+print "</article>";
 print $page->getBottomSection();
