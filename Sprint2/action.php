@@ -7,13 +7,13 @@ $page->finalizeTopSection();
 $page->finalizeBottomSection();
 print $page->getTopSection();
 
-print "<ul>";
-	print "<li><a href='index.php' title='Click here to see our home page'>Home Page</a></li>";
-	print "<li><a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
-	print "<li><a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a></li>";
-	print "<li><a href='search.php' title='Click here to search for an album'>Search</a></li>";
-	print "<li><a href='login.php' title='Click here to login'>Login</a></li>";
-print "</ul>";
+print "<div class='sidebar'>";
+	print "<a href='index.php' title='Click here to see our home page'>Home Page</a>";
+	print "<a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
+	print "<a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a>";
+	print "<a href='search.php' title='Click here to search for an album'>Search</a>";
+	print "<a href='login.php' title='Click here to login'>Login</a>";
+print "</div>";
 
 $majorBool = false;
 $majorError = "";
@@ -22,7 +22,10 @@ $toppingError = "";
 $majors = "";
 $majorsInsert = "";
 $ip = "";
-$surveyMessage = "<h1> Thank you for participating in our survey</h1>";
+$surveyMessage = "<div class='header'>
+					 <h1> Thank you for participating in our survey</h1>
+				  </div>";
+					
 $surveyOK = true;
 if(isset($_POST["topping"]) && isset($_POST["grade"]) && isset($_POST['major'])){ //will change to email when add email field
 	$grade=$_POST["grade"];

@@ -1,40 +1,46 @@
 <?php
 require_once("template.php");
-$page = new Template("Home Page");
+$page = new Template("Login");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
 $page->finalizeTopSection();
 $page->finalizeBottomSection();
 print $page->getTopSection();
 
-print "<ul>";
-	print "<li><a href='index.php' title='Click here to see our home page'>Home Page</a></li>";
-	print "<li><a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
-	print "<li><a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a></li>";
-	print "<li><a href='search.php' title='Click here to search for an album'>Search</a></li>";
-	print "<li><a href='login.php' title='Click here to login'>Login</a></li>";
-print "</ul>";
+print "<div class='sidebar'>";
+	print "<a href='index.php' title='Click here to see our home page'>Home Page</a>";
+	print "<a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
+	print "<a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a>";
+	print "<a href='search.php' title='Click here to search for an album'>Search</a>";
+	print "<a class='active' href='login.php' title='Click here to login'>Login</a>";
+print "</div>";
 
-print "<h1>Input Page</h1>";
+print "<div class='header'>";
+  print "<h1>Login</h1>";
+print "</div>";
 
-print "<form id='frmChoice' method='post' action = 'displayPage.php'";
-			print "<h2> Please enter the following input </h2>";
+print "<form id='frmChoice' method='post' action = 'displayPage.php'>";
+			
+			print "<p><b> Please enter the following information </b></p>";
+			
 			print "<fieldset id='group1'>";
 
-				print "Enter email: 
-					<input type='text' name='email'>";
+				print "Enter email"; 
+				print "<br>";
+				print "<input type='text' name='email'>";
 
 			print "</fieldset>";
 	  
 			print "<fieldset id='group2'>";
 
-				print "Enter Password:
-					<input type='text' name='password'>";
-				
-
+				print "Enter Password";
+				print "<br>";
+				print "<input type='text' name='password'>";
+				print "<br>";
+				print "<br>";
+				print "<input type='submit' value='Submit'>";
 			print "</fieldset>";
 	  
 			
-			print "<input type='submit' value='Submit'>";
 print "</form>";
 
 print $page->getBottomSection();

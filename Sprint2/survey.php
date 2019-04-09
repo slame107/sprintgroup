@@ -1,25 +1,22 @@
 <?php
-
-
 require_once("template.php");
 $page = new Template("Survey");
-$page->addHeadElement("<script src='hello.js'></script>");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
 $page->addHeadElement("<script src='survey.js'></script>");
 $page->finalizeTopSection();
 $page->finalizeBottomSection();
 print $page->getTopSection();
+print "<div class='sidebar'>";
+	print "<a href='index.php' title='Click here to see our home page'>Home Page</a>";
+	print "<a class='active' href='survey.php' title='Click here to take our survey'>Survey</a></li>";
+	print "<a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a>";
+	print "<a href='search.php' title='Click here to search for an album'>Search</a>";
+	print "<a href='login.php' title='Click here to login'>Login</a>";
+print "</div>";
 
-print "<ul>";
-	print "<li><a href='index.php' title='Click here to see our home page'>Home Page</a></li>";
-	print "<li><a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
-	print "<li><a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a></li>";
-	print "<li><a href='search.php' title='Click here to search for an album'>Search</a></li>";
-	print "<li><a href='login.php' title='Click here to login'>Login</a></li>";
-	
-print "</ul>";
-
-print "<h1>Survey Page</h1>";
+print "<div class='header'>";
+	print "<h1>Survey Page</h1>";
+print "</div>";
 
 print "<form id='frmChoice' method='post' action = 'action.php' onsubmit='return validateForm()'>";
 			print "<h2> Student Survey </h2>";
