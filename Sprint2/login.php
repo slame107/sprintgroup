@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("template.php");
 $page = new Template("Login");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
@@ -11,36 +12,58 @@ print "<div class='sidebar'>";
 	print "<a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
 	print "<a href='privacy.php' title='Click here to see our privacy policy'>Privacy policy</a>";
 	print "<a href='search.php' title='Click here to search for an album'>Search</a>";
-	print "<a class='active' href='login.php' title='Click here to login'>Login</a>";
+	if(isset($_SESSION['roleName']))
+	{
+		print "<a class='active' href='logout.php' title='Click here to logout'>Logout</a>";
+	}
+	else
+	{
+		print "<a class='active' href='login.php' title='Click here to login'>Login</a>";
+	}
+	
 print "</div>";
 
 print "<div class='header'>";
   print "<h1>Login</h1>";
+  
 print "</div>";
 
-print "<form id='frmChoice' method='post' action = 'displayPage.php'>";
-			
-			print "<p><b> Please enter the following information </b></p>";
-			
-			print "<fieldset id='group1'>";
+print "<form id='frmChoice' method='post' action = 'loginVerify.php'>";
 
-				print "Enter email"; 
-				print "<br>";
-				print "<input type='text' name='email'>";
+	if(isset($_SESSION['Error']))
+	{
+		if($_SESSION['Error'] == "notset")
+		{
+			print "<p>Please enter Username and Password</p> <br>";
+			$_SESSION['Error'] = "";
+		}
+		if($_SESSION['Error'] == "notfound")
+		{
+			print "<p>Username or Password is incorrect!</p> <br>";
+			$_SESSION['Error'] = "";
+		}
+	}
+			
+	print "<p><b> Please enter the following information </b></p>";
+			
+	print "<fieldset id='group1'>";
 
-			print "</fieldset>";
+	print "Enter email"; 
+	print "<br>";
+	print "<input type='email' name='email'>";
+
+	print "</fieldset>";
 	  
-			print "<fieldset id='group2'>";
+	print "<fieldset id='group2'>";
 
-				print "Enter Password";
-				print "<br>";
-				print "<input type='text' name='password'>";
-				print "<br>";
-				print "<br>";
-				print "<input type='submit' value='Submit'>";
-			print "</fieldset>";
-	  
-			
+	print "Enter Password";
+	print "<br>";
+	print "<input type='password' name='password'>";
+	print "<br>";
+	print "<br>";
+	print "<input type='submit' value='Submit'>";
+	print "</fieldset>";
+	 		
 print "</form>";
 
 print $page->getBottomSection();
