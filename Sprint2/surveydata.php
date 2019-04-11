@@ -12,56 +12,64 @@ require_once("sidebar.php");
 print "<div class='header'>";
   print "<h1>Survey Data</h1>";
 print "</div>";
-
-if($_SESSION['roleName'] == "admin")
+print "<article id='content'>";
+if(isset($_SESSION['roleName']))
 {
-
-	$db = new DB();
-	print "<article id='content'>";
-
-
-	if (!$db->getConnStatus()) {
-	  print "An error has occurred with connection\n";
-	  exit;
-	}
-
-	$query = "SELECT * FROM survey";
-
-	$result = $db->dbCall($query);
-
-
-
-	if($result)
+	if($_SESSION['roleName'] == "admin")
 	{
+
+		$db = new DB();
+		
+
+
+		if (!$db->getConnStatus()) {
+		  print "An error has occurred with connection\n";
+		  exit;
+		}
+
+		$query = "SELECT * FROM survey";
+
+		$result = $db->dbCall($query);
+
+
+
+		if($result)
+		{
+					
+
+		print "<table>";
+		print "<tr><th>ID</th>
+								<th>Submit Time</th>
+								<th>Major</th>
+								<th>Expected Grade</th>
+								<th>Favorite Topping</th>
+								<th>User IP</th>
+								<th>Session ID</th>
+							</tr>";
+
+			foreach($result as $data) {
+					print "<tr><td>" . $data['id'] . "</td>" . "<td>" . $data['submittime'] . 
+						"<td>" . $data['major'] . "</td>"  . "<td>" . $data['expectedgrade'] . "</td>" . 
+						"<td>" . $data['favetopping'] . "</td>"  . "<td>" . $data['userip'] . "</td>"  . "<td>" . $data['sessionid']  ."</td></tr>";
+				}
 				
+		print "</table>";
 
-	print "<table>";
-	print "<tr><th>ID</th>
-							<th>Submit Time</th>
-							<th>Major</th>
-							<th>Expected Grade</th>
-							<th>Favorite Topping</th>
-							<th>User IP</th>
-							<th>Session ID</th>
-						</tr>";
+		} else
+		{
+			print "<p id='error'> Query Error </p>";
+		}
 
-		foreach($result as $data) {
-				print "<tr><td>" . $data['id'] . "</td>" . "<td>" . $data['submittime'] . 
-					"<td>" . $data['major'] . "</td>"  . "<td>" . $data['expectedgrade'] . "</td>" . 
-					"<td>" . $data['favetopping'] . "</td>"  . "<td>" . $data['userip'] . "</td>"  . "<td>" . $data['sessionid']  ."</td></tr>";
-			}
-			
-	print "</table>";
-
-	} else
-	{
-		print "<p id='error'> Query Error </p>";
+		
 	}
-
-	print "</article>";
+	else
+	{
+		print "<h2 id='error'>You do not have authorization to be here. Please Leave!</h2>";
+	}
 }
 else
 {
-	print "You do not have authorization to be here. Please Leave!";
+	print "<h2 id='error'>You are not an authenicated user. Please Leave!</h2>";
 }
+print "</article>";
 print $page->getBottomSection();

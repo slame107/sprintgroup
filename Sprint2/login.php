@@ -7,6 +7,11 @@ $page->finalizeTopSection();
 $page->finalizeBottomSection();
 print $page->getTopSection();
 
+if(isset($_SESSION['roleName']))
+{
+	header("Location: index.php");
+}
+
 print "<div class='sidebar'>";
 	print "<a href='index.php' title='Click here to see our home page'>Home Page</a>";
 	print "<a href='survey.php' title='Click here to take our survey'>Survey</a></li>";
@@ -14,11 +19,11 @@ print "<div class='sidebar'>";
 	print "<a href='search.php' title='Click here to search for an album'>Search</a>";
 	if(isset($_SESSION['roleName']))
 	{
-		print "<a class='active' href='logout.php' title='Click here to logout'>Logout</a>";
+		print "<a href='logout.php' title='Click here to logout'>Logout</a>";
 	}
 	else
 	{
-		print "<a class='active' href='login.php' title='Click here to login'>Login</a>";
+		print "<a href='login.php' title='Click here to login'>Login</a>";
 	}
 	
 print "</div>";
@@ -34,12 +39,12 @@ print "<form id='frmChoice' method='post' action = 'loginVerify.php'>";
 	{
 		if($_SESSION['Error'] == "notset")
 		{
-			print "<p>Please enter Username and Password</p> <br>";
+			print "<p class='error'>Please enter Username and Password</p> <br>";
 			$_SESSION['Error'] = "";
 		}
 		if($_SESSION['Error'] == "notfound")
 		{
-			print "<p>Username or Password is incorrect!</p> <br>";
+			print "<p class = 'error'>Username or Password is incorrect!</p> <br>";
 			$_SESSION['Error'] = "";
 		}
 	}
