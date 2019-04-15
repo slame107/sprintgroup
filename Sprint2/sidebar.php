@@ -2,7 +2,7 @@
 print "<div class='sidebar'>";
 	if(isset($_SESSION['realName'])) 
 	{
-		print "Welcome ".$_SESSION['realName'];// Maybe try to get this somewhere else or looking better
+		print "<p class = 'name'>Welcome ".$_SESSION['realName']."</p>";// Maybe try to get this somewhere else or looking better
 	}
 	print "<a href='index.php' title='Click here to see our home page'>Home Page</a>";
 	print "<a href='survey.php' title='Click here to take our survey'>Survey</a></li>";

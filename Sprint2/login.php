@@ -39,12 +39,12 @@ print "<form id='frmChoice' method='post' action = 'loginVerify.php'>";
 	{
 		if($_SESSION['Error'] == "notset")
 		{
-			print "<p class='error'>Please enter Username and Password</p> <br>";
+			print "<p class='error'>Please enter Username and Password</p> ";
 			$_SESSION['Error'] = "";
 		}
 		if($_SESSION['Error'] == "notfound")
 		{
-			print "<p class = 'error'>Username or Password is incorrect!</p> <br>";
+			print "<p class = 'error'>Username or Password is incorrect!</p>";
 			$_SESSION['Error'] = "";
 		}
 	}

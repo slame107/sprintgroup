@@ -26,14 +26,15 @@ h1{
   text-decoration: none;
 }
  
-.sidebar a.active {
+.sidebar a:hover:not(.active) {
   background-color: #F5F5F5;
   color: black;
 }
 
-.sidebar a:hover:not(.active) {
+.name {
   background-color: #F5F5F5;
   color: black;
+  text-align: center;
 }
 
 div.content {
@@ -70,6 +71,8 @@ article {
 	overflow: auto;
 	position: relative;
 }
+
+
 
 .entry {
    border-top: #FF8800 solid 2px;
@@ -119,4 +122,5 @@ fieldset {
 
 .error {
 	color: red;
+	margin: 0;
 }
