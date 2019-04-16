@@ -1,9 +1,13 @@
 <?php
+//Creating a user session
 session_start();
 require_once("DB.class.php");
+//checks if the variables 'email' and 'password' are set
 if (isset($_POST['email']) && isset($_POST['password']))
 {
+	//Checks if email is a valid email address
 	if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
+		//Removes all illegal characters from an email address
 		$sanitizedEmail = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
 		
 		$db = new DB();
@@ -25,9 +29,11 @@ if (isset($_POST['email']) && isset($_POST['password']))
 		
 		if($result)
 		{
+			//Removes tags/special characters from a string
 			$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 			foreach($result as $user)
 			{
+				//For each authenticated user, create a session assigning the variables to the user
 				if(password_verify($password, $user["userpass"]))
 				{
 					$_SESSION['username'] = $user['username'];
@@ -39,10 +45,12 @@ if (isset($_POST['email']) && isset($_POST['password']))
 					$pass = true;
 				}
 			}
+			//Redirect authenticated users to the home page
 			if($pass)
 			{
 				header("Location: index.php");
 			}
+			//Else, redirect unauthenticated users back to the login page 
 			else
 			{
 				$_SESSION['Error'] = 'notfound';
@@ -61,20 +69,11 @@ if (isset($_POST['email']) && isset($_POST['password']))
 		$_SESSION['email'] = $_POST['email'];
 		header('Location:login.php');
 	}
-	//filter var for email
-		//errors?
-	
-	//check database
-		//errors if not found in DB
-			//$_SESSION['error']="not found";
-		//authentication good
-			//$_SESSION['error']="none";
 	
 }
 else
 {
 	$_SESSION['Error']="notset";
-	//Redirect back to login
 	header('Location: login.php');
 }
 ?>
