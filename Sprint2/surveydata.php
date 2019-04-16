@@ -69,7 +69,7 @@ if(isset($_SESSION['roleName']))
 }
 else
 {
-	print "<h2 id='error'>You are not an authenicated user. Please Leave!</h2>";
+	print "<h2 id='error'>You are not an authenticated user. Please Leave!</h2>";
 }
 print "</article>";
 print $page->getBottomSection();
