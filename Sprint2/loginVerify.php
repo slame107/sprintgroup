@@ -29,12 +29,10 @@ if (isset($_POST['email']) && isset($_POST['password']))
 		
 		if($result)
 		{
-			//Removes tags/special characters from a string
-			$password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 			foreach($result as $user)
 			{
 				//For each authenticated user, create a session assigning the variables to the user
-				if(password_verify($password, $user["userpass"]))
+				if(password_verify($_POST['password'], $user["userpass"]))
 				{
 					$_SESSION['username'] = $user['username'];
 					$_SESSION['email'] = $user['email'];
