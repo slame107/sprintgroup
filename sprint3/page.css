@@ -1,0 +1,126 @@
+h1{
+	margin-bottom: 0;
+}
+.header {
+	text-align: center;
+	color: white;
+	font-size: 2em;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  top: 0;
+  left: 0;
+  width: 160px;
+  background-color: #484848;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+ 
+.sidebar a {
+  display: block;
+  color: white;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a:hover:not(.active) {
+  background-color: #F5F5F5;
+  color: black;
+}
+
+.name {
+  background-color: #F5F5F5;
+  color: black;
+  text-align: center;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: "Lato", sans-serif;
+  background-color: #222;
+}
+
+article {
+	margin: 1em 25% 1em 25%;
+	overflow: auto;
+	position: relative;
+}
+
+
+
+.entry {
+   border-top: #FF8800 solid 2px;
+   padding: 1em 1em 1em 2em;
+   margin: 1em 0;
+   clear: both;
+   color: white;
+}
+
+form{
+	border-style: solid;
+	border-color: #FF8800;
+	margin-top: 2%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 20%;
+	padding: 1em;
+	color: white;
+	overflow: auto;
+}
+
+table, td, th{
+	border-collapse: collapse;
+	border: 2px solid #FF8800;
+	padding: .5em;
+	color: white;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+fieldset {
+    border: 0;
+}
+
+#error{
+	border: 2px solid #FF0000;
+	color: #FF0000;
+	margin-top: 2%;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	padding: 1em;
+	overflow: auto;
+}
+
+
+.error {
+	color: red;
+	margin: 0;
+}
