@@ -20,7 +20,7 @@ if (isset($_POST['email']) && isset($_POST['password']))
 		  'Content-Length: ' . $contentLength
 		);
 
-		$url = "http://cnmtsrv2.uwsp.edu/~nverh524/Sprint2/WSLoginVerify.php";
+		$url = "http://cnmtsrv2.uwsp.edu/~nverh524/sprint3/WSLoginVerify.php";
 
 		$ch = curl_init($url);// YOUR CODE HERE TO INITIALIZE A CURL RESOURCE
 
@@ -45,23 +45,26 @@ if (isset($_POST['email']) && isset($_POST['password']))
 
 		$result = json_decode($return, true);
 
-		curl_close($ch);		
+		curl_close($ch);
 		
-		if(true)
+		if(!isset($result['error']))
 		{
-			//For each authenticated user, create a session assigning the variables to the user
-			$_SESSION['username'] = $result['username'];
-			$_SESSION['email'] = $result['email'];
-			$_SESSION['creationDate'] = $result['creationDate'];
-			$_SESSION['realName'] = $result['realName'];
-			$_SESSION['userStatus'] = $result['userStatus'];
-			$_SESSION['roleName'] = $result['roleName'];	
+			$_SESSION['roleName'] = array();
+			foreach($result as $user)
+			{
+				//For each authenticated user, create a session assigning the variables to the user
+				$_SESSION['username'] = $user['username'];
+				$_SESSION['email'] = $user['email'];
+				$_SESSION['creationDate'] = $user['creationdate'];
+				$_SESSION['realName'] = $user['realname'];
+				$_SESSION['userStatus'] = $user['userstatus'];
+				array_push($_SESSION['roleName'], $user['rolename']);	
+			}
 			$pass = true;
 			//Redirect authenticated users to the home page
 			if($pass)
 			{
 				header("Location: index.php");
-				
 			}
 			//Else, redirect unauthenticated users back to the login page 
 			else
@@ -73,25 +76,20 @@ if (isset($_POST['email']) && isset($_POST['password']))
 			}	
 		}
 		else
-		{
-			
-			//$_SESSION['Error'] = 'notfound';
-			//header("Location: login.php");
+		{	
+			$_SESSION['Error'] = $result['error'];
+			header("Location: login.php");
 		}
 	}
 	else
 	{
-		//$_SESSION['Error'] = "notfound";
-		//$_SESSION['email'] = $_POST['email'];
-		//header('Location:login.php');
-	}
-	
+		$_SESSION['Error'] = "notfound";
+		header('Location:login.php');
+	}	
 }
 else
 {
-	$result = array("error"=>"notset");
-	print json_encode($result, true);
-	//$_SESSION['Error']="notset";
-	//header('Location: login.php');
+	$_SESSION['Error']="notset";
+	header('Location: login.php');
 }
 ?>

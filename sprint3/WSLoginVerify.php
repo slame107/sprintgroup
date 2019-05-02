@@ -1,11 +1,10 @@
 <?php
 require_once("DB.class.php");
-//checks if the variables 'email' and 'password' are set
 if (isset($_POST['data']))
 {	
 	$obj = json_decode($_POST['data'], true);
 	
-	$email = $obj['email'];
+	$email = filter_var($obj['email'], FILTER_SANITIZE_EMAIL);
 	$password = $obj['password'];
 		
 	$db = new DB();
@@ -23,25 +22,20 @@ if (isset($_POST['data']))
 	
 	$pass = false;
 	
-	if(true)
+	if($result)
 	{
+		//For each authenticated user, create a session assigning the variables to the user
 		foreach($result as $user)
 		{
-			//For each authenticated user, create a session assigning the variables to the user
 			if(password_verify($password, $user["userpass"]))
 			{	
-				$results = array("username"=>$user['username'], "email"=>$user['email'], "creationDate"=>$user['creationdate'], 
-				"realName"=>$user['realname'], "userStatus"=>$user['userstatus'], "roleName"=>$user['rolename'], "roleName2"=>$user['rolename']);
-				$pass = true;
+				$pass = true;	
 			}
 		}
-		//Redirect authenticated users to the home page
 		if($pass)
 		{
-			//header("Location: index.php");
-			print json_encode($results, true);
+			print json_encode($result, true);
 		}
-		//Else, redirect unauthenticated users back to the login page 
 		else
 		{
 			$results = array("error"=>"notfound");
@@ -56,7 +50,6 @@ if (isset($_POST['data']))
 }
 else
 {
-	$results = array("error"=>"notfound");
-	print json_encode($results, true);
+	header("Location:index.php");
 }
 ?>

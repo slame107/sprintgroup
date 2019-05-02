@@ -10,9 +10,12 @@ print "<div class='sidebar'>";
 	print "<a href='search.php' title='Click here to search for an album'>Search</a>";
 	if(isset($_SESSION['roleName']))
 	{
-		if($_SESSION['roleName'] == "admin")
+		foreach($_SESSION['roleName'] as $role)
 		{
-			print "<a href='surveydata.php' title='Click here to see Survey Data'>Survey Data</a>";
+			if($role == "admin")
+			{
+				print "<a href='surveydata.php' title='Click here to see Survey Data'>Survey Data</a>";
+			}
 		}
 		print "<a href='logout.php' title='Click here to logout'>Logout</a>";
 	}

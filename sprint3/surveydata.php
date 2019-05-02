@@ -13,9 +13,18 @@ print "<div class='header'>";
   print "<h1>Survey Data</h1>";
 print "</div>";
 print "<article id='content'>";
+$admin = false;
 if(isset($_SESSION['roleName']))
 {
-	if($_SESSION['roleName'] == "admin")
+	foreach($_SESSION['roleName'] as $role)
+	{
+		if($role == "admin")
+		{
+			$admin = true;
+		}
+	}
+	
+	if($admin)
 	{
 
 		$db = new DB();

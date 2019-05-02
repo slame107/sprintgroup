@@ -40,38 +40,47 @@ if (isset($_POST['email']) && isset($_POST['password']))
 					$_SESSION['realName'] = $user['realname'];
 					$_SESSION['userStatus'] = $user['userstatus'];
 					$_SESSION['roleName'] = $user['rolename'];	
-					$pass = true;
 				}
 			}
 			//Redirect authenticated users to the home page
 			if($pass)
 			{
-				header("Location: index.php");
+				//header("Location: index.php");
+				print json_encode($result, true);
 			}
 			//Else, redirect unauthenticated users back to the login page 
 			else
 			{
-				$_SESSION['Error'] = 'notfound';
-				header("Location: login.php");
+				//$_SESSION['Error'] = 'notfound';
+				$result = array("error"=>"notfound");
+				print json_encode($result, true);
+				
+				//header("Location: login.php");
 			}	
 		}
 		else
 		{
-			$_SESSION['Error'] = 'notfound';
-			header("Location: login.php");
+			$result = array("error"=>"notfound");
+			print json_encode($result, true);
+			//$_SESSION['Error'] = 'notfound';
+			//header("Location: login.php");
 		}
 	}
 	else
 	{
-		$_SESSION['Error'] = "notfound";
-		$_SESSION['email'] = $_POST['email'];
-		header('Location:login.php');
+		$result = array("error"=>"notfound");
+		print json_encode($result, true);
+		//$_SESSION['Error'] = "notfound";
+		//$_SESSION['email'] = $_POST['email'];
+		//header('Location:login.php');
 	}
 	
 }
 else
 {
-	$_SESSION['Error']="notset";
-	header('Location: login.php');
+	$result = array("error"=>"notset");
+	print json_encode($result, true);
+	//$_SESSION['Error']="notset";
+	//header('Location: login.php');
 }
 ?>
