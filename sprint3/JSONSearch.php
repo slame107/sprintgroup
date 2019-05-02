@@ -14,7 +14,7 @@ if(isset($_POST['search']))
 	  'Content-Length: ' . $contentLength
 	);
 
-	$url = "http://cnmtsrv2.uwsp.edu/~abink741/sum.php";
+	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/wsresults.php";
 
 	$ch = curl_init();
 
