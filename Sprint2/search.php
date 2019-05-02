@@ -12,7 +12,7 @@ print "<div class='header'>";
 	print "<h1>Search Page</h1>";
 print "</div>";
 
-print "<form id='frmChoice' method='post' action = 'results.php' onsubmit='return validate()'>";
+print "<form id='frmChoice' method='post' action = 'JSONSearch.php' onsubmit='return validate()'>";
 print "<h2> Album Search </h2>";
 print "<input type='text' name='search' placeholder='Search..'>";
 print "<br>";
