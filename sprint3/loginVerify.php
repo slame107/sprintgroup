@@ -7,71 +7,91 @@ if (isset($_POST['email']) && isset($_POST['password']))
 {
 	//Checks if email is a valid email address
 	if(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL)){
-		//Removes all illegal characters from an email address
-		$sanitizedEmail = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+
+		$data = array("email"=>$_POST['email'], "password"=>$_POST['password']);
+		$dataJson = json_encode($data);// YOUR CODE HERE TO ENCODE AS JSON
+
+		$postString = "data=" . urlencode($dataJson);
+
+		$contentLength = strlen($postString);
+
+		$header = array(
+		  'Content-Type: application/x-www-form-urlencoded',
+		  'Content-Length: ' . $contentLength
+		);
+
+		$url = "http://cnmtsrv2.uwsp.edu/~nverh524/Sprint2/WSLoginVerify.php";
+
+		$ch = curl_init($url);// YOUR CODE HERE TO INITIALIZE A CURL RESOURCE
+
+		curl_setopt($ch,
+			CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch,
+			CURLOPT_POSTFIELDS, $postString);
+		curl_setopt($ch,
+			CURLOPT_HTTPHEADER, $header);
+
+		// USE curl_setopt to set the following options:
+		// CURLOPT_RETURNTRANSFER
+		// CURLOPT_URL
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+		curl_setopt($ch, CURLOPT_URL, $url);
+
+		$return = curl_exec($ch);// YOUR CODE HERE TO EXECUTE THE CURL CALL
+
+		//print $return;
+
+		$result = json_decode($return, true);
+
+		curl_close($ch);		
 		
-		$db = new DB();
-
-		$email = $db->dbEsc($sanitizedEmail);
-
-		if (!$db->getConnStatus()) {
-			print "An error has occurred with connection\n";
-			exit;
-		}
-
-		$query = "SELECT username, userpass, email, creationdate, realname, userstatus, rolename 
-		FROM user, role, user2role 
-		WHERE user.id=user2role.userid AND role.id=user2role.roleid AND username='$email'";
-
-		$result = $db->dbCall($query);
-		
-		$pass = false;
-		
-		if($result)
+		if(true)
 		{
-			foreach($result as $user)
-			{
-				//For each authenticated user, create a session assigning the variables to the user
-				if(password_verify($_POST['password'], $user["userpass"]))
-				{
-					$_SESSION['username'] = $user['username'];
-					$_SESSION['email'] = $user['email'];
-					$_SESSION['creationDate'] = $user['creationdate'];
-					$_SESSION['realName'] = $user['realname'];
-					$_SESSION['userStatus'] = $user['userstatus'];
-					$_SESSION['roleName'] = $user['rolename'];	
-					$pass = true;
-				}
-			}
+			//For each authenticated user, create a session assigning the variables to the user
+			$_SESSION['username'] = $result['username'];
+			$_SESSION['email'] = $result['email'];
+			$_SESSION['creationDate'] = $result['creationDate'];
+			$_SESSION['realName'] = $result['realName'];
+			$_SESSION['userStatus'] = $result['userStatus'];
+			$_SESSION['roleName'] = $result['roleName'];	
+			$pass = true;
 			//Redirect authenticated users to the home page
 			if($pass)
 			{
 				header("Location: index.php");
+				
 			}
 			//Else, redirect unauthenticated users back to the login page 
 			else
 			{
-				$_SESSION['Error'] = 'notfound';
-				header("Location: login.php");
+				//$_SESSION['Error'] = 'notfound';
+				
+				
+				//header("Location: login.php");
 			}	
 		}
 		else
 		{
-			$_SESSION['Error'] = 'notfound';
-			header("Location: login.php");
+			
+			//$_SESSION['Error'] = 'notfound';
+			//header("Location: login.php");
 		}
 	}
 	else
 	{
-		$_SESSION['Error'] = "notfound";
-		$_SESSION['email'] = $_POST['email'];
-		header('Location:login.php');
+		//$_SESSION['Error'] = "notfound";
+		//$_SESSION['email'] = $_POST['email'];
+		//header('Location:login.php');
 	}
 	
 }
 else
 {
-	$_SESSION['Error']="notset";
-	header('Location: login.php');
+	$result = array("error"=>"notset");
+	print json_encode($result, true);
+	//$_SESSION['Error']="notset";
+	//header('Location: login.php');
 }
 ?>
