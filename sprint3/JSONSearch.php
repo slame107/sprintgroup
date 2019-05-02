@@ -1,4 +1,17 @@
 <?php
+require_once("template.php");
+$page = new Template("Results");
+$page->addHeadElement("<link href='page.css' rel='stylesheet'>");
+$page->finalizeTopSection();
+$page->finalizeBottomSection();
+print $page->getTopSection();
+
+require_once("sidebar.php");
+
+print "<div class='header'>";
+	print "<h1>Results Page</h1>";
+print "</div>";
+
 if(isset($_POST['search']))
 {
 	$data = array("Search_Result" => $_POST['search']);
@@ -14,7 +27,7 @@ if(isset($_POST['search']))
 	  'Content-Length: ' . $contentLength
 	);
 
-	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/wsresults.php";
+	$url = "http://cnmtsrv2.uwsp.edu/~abink741/wsresults.php";
 
 	$ch = curl_init();
 
@@ -32,7 +45,24 @@ if(isset($_POST['search']))
 	$return = curl_exec($ch);
 
 	print $return;
+	
+	print "<table>";
+		print "<tr><th>Insert Time</th>
+								<th>Album Title</th>
+								<th>Album Artist</th>
+								<th>Album Length</th>
+								<th>Status</th>
+								<th>URL</th>
+							</tr>";
 
+			foreach($result as $album) {
+				print "<tr><td>" . $album['inserttime'] . "</td>" . "<td>" . $album['albumtitle'] . 
+					"<td>" . $album['albumartist'] . "</td>"  . "<td>" . $album['albumlength'] . "</td>" . 
+					"<td>" . $album['status']  ."</td></tr>" . $album['url']  ."</td></tr>";
+			}
+				
+		print "</table>";
+	
 	curl_close($ch);
 }else
 {
