@@ -27,7 +27,7 @@ if(isset($_POST['search']))
 	  'Content-Type: application/x-www-form-urlencoded',
 	  'Content-Length: ' . $contentLength
 	);
-	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/wsresults.php";
+	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/suehringws.php";
 
 	$ch = curl_init($url);// YOUR CODE HERE TO INITIALIZE A CURL RESOURCE
 
@@ -49,9 +49,10 @@ if(isset($_POST['search']))
 //	print $return;
 //var_dump($return);
 
-	$result = json_decode($return,true);
+	$result = json_decode($return);
 
-//var_dump($result);
+var_dump($result);
+exit;
 
 		if(!isset($result['error2']))
 		{
@@ -69,6 +70,7 @@ if(isset($_POST['search']))
 									<th>URL</th>
 								</tr>";
 
+//need to make sure $result isset here
 		foreach($result as $album)
 		{
 				print "<tr><td>" . $album['inserttime'] . "</td>" . "<td>" . $album['albumtitle'] .

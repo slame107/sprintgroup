@@ -1,20 +1,22 @@
 <?php
 require_once("DB.class.php");
 
+
 /* test post string
 $_POST['search'] = 'oasis';
 $search = $_POST['search'];
 $data = array("search" => $_POST['search']);
 $_POST['search'] = json_encode($data);
+/*
 //var_dump($_POST['search']);
 
 //var_dump($data); */
 
 
-if (isset($_POST['search']))
+if (isset($_POST['data']))
 	{
 
-		$obj = json_decode($_POST['search'], true);
+		$obj = json_decode($_POST['data'], true);
 		$search = filter_var($obj['search'], FILTER_SANITIZE_STRING);
  		//var_dump($search);
 		$db = new DB();
@@ -35,7 +37,11 @@ if (isset($_POST['search']))
 		{
 				print json_encode($result, true);
 			}
+		else { //nothing was found in the database
+			print json_encode($result,true);
 		}
+		}
+
 	else
 	{
 		$_SESSION['Error2']="notset";
