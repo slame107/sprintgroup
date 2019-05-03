@@ -13,6 +13,20 @@ print "<div class='header'>";
 print "</div>";
 
 print "<form id='frmChoice' method='post' action = 'JSONSearch.php' onsubmit='return validate()'>";
+if(isset($_SESSION['Error2']))
+{
+	if($_SESSION['Error2'] == "notset")
+	{
+		print "<p class='error'>Please enter valid album artist or title.</p> ";
+		$_SESSION['Error2'] = "";
+	}
+	if($_SESSION['Error2'] == "notfound")
+	{
+		print "<p class = 'error'>Please enter valid album artist or title.</p>";
+		$_SESSION['Error2'] = "";
+	}
+}
+
 print "<h2> Album Search </h2>";
 print "<input type='text' name='search' placeholder='Search..'>";
 print "<br>";

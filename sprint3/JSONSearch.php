@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once("template.php");
 $page = new Template("Results");
 $page->addHeadElement("<link href='page.css' rel='stylesheet'>");
@@ -8,28 +9,27 @@ print $page->getTopSection();
 
 require_once("sidebar.php");
 
-print "<div class='header'>";
-	print "<h1>Results Page</h1>";
-print "</div>";
+
 
 if(isset($_POST['search']))
 {
-	$data = array("Search_Result" => $_POST['search']);
+ 	$data = array("search" => $_POST['search']);
+//var_dump($data);
 
 	$dataJson = json_encode($data);
+	var_dump($dataJson);
 
 	$postString = "data=" . urlencode($dataJson);
-
+//var_dump($postString);
 	$contentLength = strlen($postString);
 
 	$header = array(
 	  'Content-Type: application/x-www-form-urlencoded',
 	  'Content-Length: ' . $contentLength
 	);
+	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/wsresults.php";
 
-	$url = "http://cnmtsrv2.uwsp.edu/~abink741/wsresults.php";
-
-	$ch = curl_init();
+	$ch = curl_init($url);// YOUR CODE HERE TO INITIALIZE A CURL RESOURCE
 
 	curl_setopt($ch,
 		CURLOPT_CUSTOMREQUEST, "POST");
@@ -42,30 +42,48 @@ if(isset($_POST['search']))
 	curl_setopt($ch,
 		CURLOPT_URL, $url);
 
-	$return = curl_exec($ch);
+	$return = curl_exec($ch);// YOUR CODE HERE TO EXECUTE THE CURL CALL
+	var_dump($return);
+//	var_dump($url);
 
-	print $return;
-	
-	print "<table>";
-		print "<tr><th>Insert Time</th>
-								<th>Album Title</th>
-								<th>Album Artist</th>
-								<th>Album Length</th>
-								<th>Status</th>
-								<th>URL</th>
-							</tr>";
+//	print $return;
+//var_dump($return);
 
-			foreach($result as $album) {
-				print "<tr><td>" . $album['inserttime'] . "</td>" . "<td>" . $album['albumtitle'] . 
-					"<td>" . $album['albumartist'] . "</td>"  . "<td>" . $album['albumlength'] . "</td>" . 
+	$result = json_decode($return,true);
+
+//var_dump($result);
+
+		if(!isset($result['error2']))
+		{
+			print "<div class='header'>";
+				print "<h1>Results Page</h1>";
+			print "</div>";
+		//	$_SESSION['roleName'] = array();
+
+		print "<table>";
+			print "<tr><th>Insert Time</th>
+									<th>Album Title</th>
+									<th>Album Artist</th>
+									<th>Album Length</th>
+									<th>Status</th>
+									<th>URL</th>
+								</tr>";
+
+		foreach($result as $album)
+		{
+				print "<tr><td>" . $album['inserttime'] . "</td>" . "<td>" . $album['albumtitle'] .
+					"<td>" . $album['albumartist'] . "</td>"  . "<td>" . $album['albumlength'] . "</td>" .
 					"<td>" . $album['status']  ."</td></tr>" . $album['url']  ."</td></tr>";
 			}
-				
+
 		print "</table>";
-	
-	curl_close($ch);
-}else
-{
-	print "<h2 id='error'> Please enter valid album artist or title. </h2>";
+		curl_close($ch);
+	}
 }
+	else
+	{
+		$_SESSION['Error2']="notset";
+		header("Location: search.php");
+	}
+
 ?>
