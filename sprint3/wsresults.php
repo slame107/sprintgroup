@@ -38,7 +38,9 @@ if (isset($_POST['data']))
 				print json_encode($result, true);
 			}
 		else { //nothing was found in the database
-			print json_encode($result,true);
+			$results = array("error"=>"notfound");
+			print json_encode($result, true);
+			//print json_encode($result,true);
 		}
 		}
 

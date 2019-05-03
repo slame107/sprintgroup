@@ -17,7 +17,7 @@ if(isset($_POST['search']))
 //var_dump($data);
 
 	$dataJson = json_encode($data);
-	var_dump($dataJson);
+	//var_dump($dataJson);
 
 	$postString = "data=" . urlencode($dataJson);
 //var_dump($postString);
@@ -27,7 +27,7 @@ if(isset($_POST['search']))
 	  'Content-Type: application/x-www-form-urlencoded',
 	  'Content-Length: ' . $contentLength
 	);
-	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/suehringws.php";
+	$url = "http://cnmtsrv2.uwsp.edu/~jmung222/wsresults.php";
 
 	$ch = curl_init($url);// YOUR CODE HERE TO INITIALIZE A CURL RESOURCE
 
@@ -43,23 +43,22 @@ if(isset($_POST['search']))
 		CURLOPT_URL, $url);
 
 	$return = curl_exec($ch);// YOUR CODE HERE TO EXECUTE THE CURL CALL
-	var_dump($return);
+//	var_dump($return);
 //	var_dump($url);
 
 //	print $return;
 //var_dump($return);
 
-	$result = json_decode($return);
+	$result = json_decode($return, true);
 
-var_dump($result);
-exit;
+//var_dump($result);
 
-		if(!isset($result['error2']))
+
+		if(!isset($result['Error2']))
 		{
 			print "<div class='header'>";
 				print "<h1>Results Page</h1>";
 			print "</div>";
-		//	$_SESSION['roleName'] = array();
 
 		print "<table>";
 			print "<tr><th>Insert Time</th>
@@ -80,7 +79,8 @@ exit;
 
 		print "</table>";
 		curl_close($ch);
-	}
+
+  }
 }
 	else
 	{
