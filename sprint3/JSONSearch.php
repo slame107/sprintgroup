@@ -74,7 +74,7 @@ if(isset($_POST['search']))
 		{
 				print "<tr><td>" . $album['inserttime'] . "</td>" . "<td>" . $album['albumtitle'] .
 					"<td>" . $album['albumartist'] . "</td>"  . "<td>" . $album['albumlength'] . "</td>" .
-					"<td>" . $album['status']  ."</td></tr>" . $album['url']  ."</td></tr>";
+					"<td>" . $album['status']  . "</td>" . "<td>" .  "<a href='".$album['url']."'>Buy CD</a>"  . "</td></tr>";
 			}
 
 		print "</table>";
