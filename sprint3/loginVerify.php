@@ -60,24 +60,11 @@ if (isset($_POST['email']) && isset($_POST['password']))
 				$_SESSION['userStatus'] = $user['userstatus'];
 				array_push($_SESSION['roleName'], $user['rolename']);	
 			}
-			$pass = true;
-			//Redirect authenticated users to the home page
-			if($pass)
-			{
-				header("Location: index.php");
-			}
-			//Else, redirect unauthenticated users back to the login page 
-			else
-			{
-				//$_SESSION['Error'] = 'notfound';
-				
-				
-				//header("Location: login.php");
-			}	
+			header("Location:index.php");
 		}
 		else
 		{	
-			$_SESSION['Error'] = $result['error'];
+			$_SESSION['Error'] = "notfound";
 			header("Location: login.php");
 		}
 	}

@@ -14,13 +14,13 @@ require_once("sidebar.php");
 if(isset($_POST['search']))
 {
  	$data = array("search" => $_POST['search']);
-//var_dump($data);
+
 
 	$dataJson = json_encode($data);
-	//var_dump($dataJson);
+
 
 	$postString = "data=" . urlencode($dataJson);
-//var_dump($postString);
+
 	$contentLength = strlen($postString);
 
 	$header = array(
@@ -43,15 +43,8 @@ if(isset($_POST['search']))
 		CURLOPT_URL, $url);
 
 	$return = curl_exec($ch);// YOUR CODE HERE TO EXECUTE THE CURL CALL
-//	var_dump($return);
-//	var_dump($url);
-
-//	print $return;
-//var_dump($return);
 
 	$result = json_decode($return, true);
-
-//var_dump($result);
 
 
 		if(!isset($result['Error2']))

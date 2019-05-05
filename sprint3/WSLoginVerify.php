@@ -50,6 +50,7 @@ if (isset($_POST['data']))
 }
 else
 {
-	header("Location:index.php");
+	$results = array("error"=>"notset");
+	print json_encode($results, true);
 }
 ?>

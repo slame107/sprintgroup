@@ -18,6 +18,10 @@ h1{
   height: 100%;
   overflow: auto;
 }
+
+a{
+	color: white;
+}
  
 .sidebar a {
   display: block;
